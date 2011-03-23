@@ -5,7 +5,7 @@ class AdtoTest(TestCase):
     """
     Make sure management commands updates the database
     """
-    fixtures = ['adto.json']
+    fixtures = ['banner_rotator.json']
 
     def testBiasedChoice(self):
         """
