@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from adto.models import Campaign, Banner
+from banner_rotator.models import Campaign, Banner
 
 
 class BannerAdminInline(admin.StackedInline):

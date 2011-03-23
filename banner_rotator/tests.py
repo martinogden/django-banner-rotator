@@ -1,5 +1,5 @@
 from django.test import TestCase
-from adto.models import Banner
+from banner_rotator.models import Banner
 
 class AdtoTest(TestCase):
     """

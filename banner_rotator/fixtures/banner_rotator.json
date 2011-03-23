@@ -1,7 +1,7 @@
 [
     {
         "pk": 1,
-         "model": "adto.campaign",
+         "model": "banner_rotator.campaign",
          "fields": 
         {
             "created_at": "2011-03-21 16:52:10",
@@ -12,11 +12,10 @@
      
     {
         "pk": 1,
-         "model": "adto.banner",
+         "model": "banner_rotator.banner",
          "fields": 
         {
-            "created_at": "2011-03-21 16:52:10",
-             "campaign": 1,
+            "campaign": 1,
              "name": "Likely",
              "weight": 10,
              "url": "http://google.com/",
@@ -24,17 +23,16 @@
              "is_active": true,
              "updated_at": "2011-03-21 16:52:10",
              "impressions": 0,
-             "clicks": 0
+             "created_at": "2011-03-21 16:52:10"
         }
     },
      
     {
         "pk": 2,
-         "model": "adto.banner",
+         "model": "banner_rotator.banner",
          "fields": 
         {
-            "created_at": "2011-03-21 16:52:10",
-             "campaign": 1,
+            "campaign": 1,
              "name": "Not likely",
              "weight": 8,
              "url": "http://bing.com/",
@@ -42,7 +40,7 @@
              "is_active": true,
              "updated_at": "2011-03-21 17:44:35",
              "impressions": 0,
-             "clicks": 0
+             "created_at": "2011-03-21 16:52:10"
         }
     }
 ]
