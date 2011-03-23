@@ -47,7 +47,8 @@ class Banner(models.Model):
         click = {
             'banner': self,
             'ip': request.META.get('REMOTE_ADDR'),
-            'user_agent': request.META.get('REMOTE_ADDR'),
+            'user_agent': request.META.get('HTTP_USER_AGENT'),
+            'referrer': request.META.get('HTTP_REFERER'),
         }
         
         if request.user.is_authenticated():
@@ -69,3 +70,4 @@ class Click(models.Model):
     datetime = models.DateTimeField("Clicked at",auto_now_add=True)
     ip = models.IPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=255, null=True, blank=True)
+    referrer = models.URLField(null=True, blank=True)
