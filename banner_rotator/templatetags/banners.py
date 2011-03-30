@@ -14,10 +14,15 @@ class BannerNode(template.Node):
         kwargs = {}
         if self.campaign_id:
             kwargs['campaign'] = self.campaign_id
-        banner = Banner.objects.biased_choice(**kwargs)
-        banner.view()
-        context[self.varname] = banner
-        return ''
+        try:
+            banner = Banner.objects.biased_choice(**kwargs)
+        except Banner.DoesNotExist:
+            context[self.varname] = None
+            return ''
+        else:
+            banner.view()
+            context[self.varname] = banner
+            return ''
 
 
 @register.tag

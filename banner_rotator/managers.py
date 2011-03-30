@@ -39,6 +39,9 @@ class BiasedManager(models.Manager):
         queryset = super(BiasedManager, self).get_query_set()\
             .filter(is_active=True, **kwargs)
 
+        if not queryset.count():
+            raise self.model.DoesNotExist
+
         calculations = queryset.aggregate(weight_sum=models.Sum('weight'))
 
         banners = queryset.extra(select={'bias': 'weight/%i' % calculations['weight_sum']})
