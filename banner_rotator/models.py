@@ -39,9 +39,9 @@ class Banner(models.Model):
         return self.name
 
     def view(self):
-        self.impressesions = models.F('impressesions') + 1
+        self.impressions = models.F('impressions') + 1
         self.save()
-        return self.impressions
+        return ''
 
     def click(self, request):
         click = {
