@@ -1,4 +1,9 @@
+#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
 from django.db import models
+
+from django_extensions.db.fields import AutoSlugField
 
 from banner_rotator.managers import BiasedManager
 
@@ -6,7 +11,7 @@ from banner_rotator.managers import BiasedManager
 class Campaign(models.Model):
 
     name = models.CharField(max_length=255)
-
+    slug = AutoSlugField(populate_from="name")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -23,12 +28,13 @@ class Banner(models.Model):
     name = models.CharField(max_length=255)
     url = models.URLField()
 
-    impressions = models.IntegerField(default=0)
+#    impressions = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
 
     weight = models.IntegerField(help_text="A ten will display 10 times more often that a one.",\
         choices=[[i,i] for i in range(11)])
 
-    image = models.ImageField(upload_to='uploads/banners')
+    file = models.FileField(upload_to='uploads/banners')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -38,8 +44,11 @@ class Banner(models.Model):
     def __unicode__(self):
         return self.name
 
+    def is_swf(self):
+        return self.file.filename.lower().endswith("swf")
+
     def view(self):
-        self.impressions = models.F('impressions') + 1
+        self.views = models.F('views') + 1
         self.save()
         return ''
 
@@ -50,12 +59,11 @@ class Banner(models.Model):
             'user_agent': request.META.get('HTTP_USER_AGENT'),
             'referrer': request.META.get('HTTP_REFERER'),
         }
-        
+
         if request.user.is_authenticated():
             click['user'] = request.user
 
         return Click.objects.create(**click)
-
 
     @models.permalink
     def get_absolute_url(self):
@@ -71,3 +79,4 @@ class Click(models.Model):
     ip = models.IPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=255, null=True, blank=True)
     referrer = models.URLField(null=True, blank=True)
+

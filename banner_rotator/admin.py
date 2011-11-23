@@ -33,11 +33,12 @@ class BannerAdminInline(admin.StackedInline):
     model = Banner
     form = BannerForm
     extra = 0
-    readonly_fields = ['impressions',]
-    fields = ['is_active', 'name', 'url', 'image', 'weight', 'clicks', 'impressions']
+    readonly_fields = ['views',]
+    fields = ['is_active', 'name', 'url', 'file', 'weight', 'clicks', 'views']
 
 
 class CampaignAdmin(admin.ModelAdmin):
     inlines = [BannerAdminInline]
 
 admin.site.register(Campaign, CampaignAdmin)
+

@@ -2,45 +2,46 @@
     {
         "pk": 1,
          "model": "banner_rotator.campaign",
-         "fields": 
+         "fields":
         {
             "created_at": "2011-03-21 16:52:10",
              "name": "Test",
              "updated_at": "2011-03-21 17:44:35"
         }
     },
-     
+
     {
         "pk": 1,
          "model": "banner_rotator.banner",
-         "fields": 
+         "fields":
         {
             "campaign": 1,
              "name": "Likely",
              "weight": 10,
              "url": "http://google.com/",
-             "image": "uploads/banners/madmen_icon.jpg",
+             "file": "uploads/banners/madmen_icon.jpg",
              "is_active": true,
              "updated_at": "2011-03-21 16:52:10",
-             "impressions": 0,
+             "views": 0,
              "created_at": "2011-03-21 16:52:10"
         }
     },
-     
+
     {
         "pk": 2,
          "model": "banner_rotator.banner",
-         "fields": 
+         "fields":
         {
             "campaign": 1,
              "name": "Not likely",
              "weight": 8,
              "url": "http://bing.com/",
-             "image": "uploads/banners/madmen_icon_1.jpg",
+             "file": "uploads/banners/madmen_icon_1.jpg",
              "is_active": true,
              "updated_at": "2011-03-21 17:44:35",
-             "impressions": 0,
+             "views": 0,
              "created_at": "2011-03-21 16:52:10"
         }
     }
 ]
+
