@@ -1,17 +1,16 @@
-#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
-from django_extensions.db.fields import AutoSlugField
+#from django_extensions.db.fields import AutoSlugField
 
-from banner_rotator.managers import BiasedManager
+from banner_rotator.managers import BannerManager
 
 
 class Campaign(models.Model):
-
-    name = models.CharField(max_length=255)
-    slug = AutoSlugField(populate_from="name")
+    name = models.CharField(_('Name'), max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -19,27 +18,63 @@ class Campaign(models.Model):
         return self.name
 
 
+class Place(models.Model):
+    name = models.CharField(_('Name'), max_length=255)
+    slug = models.SlugField(_('Slug'))
+    width = models.SmallIntegerField(_('Width'), blank=True, null=True, default=None)
+    height = models.SmallIntegerField(_('Height'), blank=True, null=True, default=None)
+
+    class Meta:
+        unique_together = ('slug',)
+
+    def __unicode__(self):
+        return self.name
+
+    def size_str(self):
+        if self.width and self.height:
+            return '%sx%s' % (self.width, self.height)
+        elif self.width:
+            return '%sxX' % self.width
+        elif self.height:
+            return 'Xx%s' % self.height
+        else:
+            return ''
+
+
 class Banner(models.Model):
+    URL_TARGET_CHOICES = (
+        ('', _('Current page')),
+        ('_blank', _('Blank page')),
+    )
 
-    objects = BiasedManager()
+    campaign = models.ForeignKey(Campaign, verbose_name=_('Campaign'), blank=True, null=True, default=None,
+        related_name="banners", db_index=True)
+    place = models.ForeignKey(Place, verbose_name=_('Place'), related_name="banners", db_index=True)
 
-    campaign = models.ForeignKey(Campaign, related_name="banners")
+    name = models.CharField(_('Name'), max_length=255)
+    alt = models.CharField(_('Image alt'), max_length=255, blank=True, default='')
 
-    name = models.CharField(max_length=255)
-    url = models.URLField()
+    url = models.URLField(_('URL'))
+    url_target = models.CharField(_('Target'), max_length=10, choices=URL_TARGET_CHOICES, blank=True, default='')
 
-#    impressions = models.IntegerField(default=0)
-    views = models.IntegerField(default=0)
+    views = models.IntegerField(_('Views'), default=0)
+    max_views = models.IntegerField(_('Max views'), default=0)
+    max_clicks = models.IntegerField(_('Max clicks'), default=0)
 
-    weight = models.IntegerField(help_text="A ten will display 10 times more often that a one.",\
+    weight = models.IntegerField(_('Weight'), help_text=_("A ten will display 10 times more often that a one."),
         choices=[[i,i] for i in range(11)])
 
-    file = models.FileField(upload_to='uploads/banners')
+    file = models.FileField(_('File'), upload_to='banners')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    is_active = models.BooleanField(default=True)
+    start_at = models.DateTimeField(blank=True, null=True, default=None)
+    finish_at = models.DateTimeField(blank=True, null=True, default=None)
+
+    is_active = models.BooleanField(_('Is active'), default=True)
+
+    objects = BannerManager()
 
     def __unicode__(self):
         return self.name
@@ -71,11 +106,9 @@ class Banner(models.Model):
 
 
 class Click(models.Model):
-
     banner = models.ForeignKey(Banner, related_name="clicks")
-    user = models.ForeignKey("auth.User", null=True, blank=True, related_name="clicks")
-
-    datetime = models.DateTimeField("Clicked at",auto_now_add=True)
+    user = models.ForeignKey(User, null=True, blank=True, related_name="banner_clicks")
+    datetime = models.DateTimeField("Clicked at", auto_now_add=True)
     ip = models.IPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=255, null=True, blank=True)
     referrer = models.URLField(null=True, blank=True)

@@ -1,0 +1,13 @@
+{% if banner %}
+    <script type="text/javascript">
+        var rndnum = Math.round(Math.random()*65535);
+
+        {% if banner.is_swf %}
+            {# todo написать #}
+        {% else %}
+            document.write('<a href="{% url banner_click banner.id %}"><img src="{{ banner.file.url }}?rnd='+rndnum+'" alt="{{ banner.alt }}"/></a>');
+        {% endif %}
+    </script>
+{% else %}
+    &nbsp;
+{% endif %}
