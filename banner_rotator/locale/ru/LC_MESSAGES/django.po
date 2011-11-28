@@ -21,7 +21,7 @@ msgstr ""
 
 #: models.py:13 models.py:22 models.py:46
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: models.py:23
 msgid "Slug"
@@ -29,19 +29,19 @@ msgstr ""
 
 #: models.py:24
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: models.py:25
 msgid "Height"
-msgstr ""
+msgstr "Высота"
 
 #: models.py:42
 msgid "Campaign"
-msgstr ""
+msgstr "Компания"
 
 #: models.py:44
 msgid "Place"
-msgstr ""
+msgstr "Место"
 
 #: models.py:47
 msgid "URL"
@@ -49,11 +49,11 @@ msgstr ""
 
 #: models.py:49
 msgid "Views"
-msgstr ""
+msgstr "Просмотры"
 
 #: models.py:51
 msgid "Weight"
-msgstr ""
+msgstr "Вес"
 
 #: models.py:51
 msgid "A ten will display 10 times more often that a one."
@@ -61,8 +61,8 @@ msgstr ""
 
 #: models.py:54
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: models.py:59
 msgid "Is active"
-msgstr ""
+msgstr "Активен"
