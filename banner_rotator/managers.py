@@ -30,8 +30,8 @@ def pick(bias_list):
 
 
 class BannerManager(models.Manager):
-    def biased_choice(self, place_slug):
-        queryset = self.filter(is_active=True, place__slug=place_slug)
+    def biased_choice(self, place):
+        queryset = self.filter(is_active=True, places=place)
 
         if not queryset.count():
             raise self.model.DoesNotExist

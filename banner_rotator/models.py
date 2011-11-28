@@ -49,7 +49,6 @@ class Banner(models.Model):
 
     campaign = models.ForeignKey(Campaign, verbose_name=_('Campaign'), blank=True, null=True, default=None,
         related_name="banners", db_index=True)
-    place = models.ForeignKey(Place, verbose_name=_('Place'), related_name="banners", db_index=True)
 
     name = models.CharField(_('Name'), max_length=255)
     alt = models.CharField(_('Image alt'), max_length=255, blank=True, default='')
@@ -73,6 +72,8 @@ class Banner(models.Model):
     finish_at = models.DateTimeField(blank=True, null=True, default=None)
 
     is_active = models.BooleanField(_('Is active'), default=True)
+
+    places = models.ManyToManyField(Place, verbose_name=_('Place'), related_name="banners", db_index=True)
 
     objects = BannerManager()
 

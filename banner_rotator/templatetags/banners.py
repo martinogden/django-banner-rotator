@@ -6,7 +6,7 @@ from django import template
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
-from banner_rotator.models import Banner
+from banner_rotator.models import Banner, Place
 
 
 logger = logging.getLogger('banner_rotator')
@@ -19,10 +19,15 @@ class BannerNode(template.Node):
         self.varname, self.place_slug, = varname, place_slug
 
     def render(self, context):
-        local_context = {'place_slug': self.place_slug}
+        try:
+            self.place = Place.objects.get(slug=self.place_slug)
+        except Place.DoesNotExist:
+            return ''
+
+        local_context = {'banner_place': self.place}
 
         try:
-            banner_obj = Banner.objects.biased_choice(self.place_slug)
+            banner_obj = Banner.objects.biased_choice(self.place)
             banner_obj.view()
         except Banner.DoesNotExist:
             banner_obj = None

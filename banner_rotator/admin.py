@@ -21,12 +21,12 @@ admin.site.register(Campaign, CampaignAdmin)
 
 
 class BannerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'campaign', 'place', 'weight', 'url', 'views', 'is_active')
-    list_filter = ('campaign', 'place', 'is_active')
+    list_display = ('name', 'campaign', 'weight', 'url', 'views', 'is_active')
+    list_filter = ('campaign', 'places', 'is_active')
     date_hierarchy = 'created_at'
     fieldsets = (
         (_('Main'), {
-            'fields': ('campaign', 'place', 'name', 'url', 'url_target', 'file', 'alt'),
+            'fields': ('campaign', 'places', 'name', 'url', 'url_target', 'file', 'alt'),
         }),
         (_('Show'), {
             'fields': ('weight', 'max_views', 'max_clicks', 'start_at', 'finish_at', 'is_active'),
