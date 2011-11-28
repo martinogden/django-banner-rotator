@@ -62,7 +62,7 @@ class Banner(models.Model):
     max_clicks = models.IntegerField(_('Max clicks'), default=0)
 
     weight = models.IntegerField(_('Weight'), help_text=_("A ten will display 10 times more often that a one."),
-        choices=[[i,i] for i in range(11)])
+        choices=[[i,i] for i in range(1, 11)])
 
     file = models.FileField(_('File'), upload_to='banners')
 
@@ -80,7 +80,7 @@ class Banner(models.Model):
         return self.name
 
     def is_swf(self):
-        return self.file.filename.lower().endswith("swf")
+        return self.file.name.lower().endswith("swf")
 
     def view(self):
         self.views = models.F('views') + 1

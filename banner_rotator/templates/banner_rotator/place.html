@@ -3,11 +3,17 @@
         var rndnum = Math.round(Math.random()*65535);
 
         {% if banner.is_swf %}
-            {# todo написать #}
+            document.write('<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0"');
+            {% if banner.place.width %}document.write(' width="{{ banner.place.width }}"');{% endif %}
+            {% if banner.place.height %}document.write(' height="{{ banner.place.height }}"');{% endif %}
+            document.write('><param name="allowScriptAccess" value="Always"><param name="menu" value="false"><param name="quality" value="high"><param name="wmode" value="opaque">');
+            document.write('<param name="movie" value="{{ banner.file.url }}?rnd='+rndnum+'"><param name="flashvars" value="url={% url banner_click banner.id %}">');
+            document.write('<embed src="{{ banner.file.url }}?rnd='+rndnum+'" flashvars="url={% url banner_click banner.id %}" quality="high" allowscriptaccess="Always" wmode="opaque" menu="false" swliveconnect="FALSE" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"');
+            {% if banner.place.width %}document.write(' width="{{ banner.place.width }}"');{% endif %}
+            {% if banner.place.height %}document.write(' height="{{ banner.place.height }}"');{% endif %}
+            document.write('></object>');
         {% else %}
             document.write('<a href="{% url banner_click banner.id %}"><img src="{{ banner.file.url }}?rnd='+rndnum+'" alt="{{ banner.alt }}"/></a>');
         {% endif %}
     </script>
-{% else %}
-    &nbsp;
 {% endif %}

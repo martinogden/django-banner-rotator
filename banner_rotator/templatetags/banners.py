@@ -3,6 +3,7 @@
 import logging
 
 from django import template
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from banner_rotator.models import Banner
@@ -22,6 +23,7 @@ class BannerNode(template.Node):
 
         try:
             banner_obj = Banner.objects.biased_choice(self.place_slug)
+            banner_obj.view()
         except Banner.DoesNotExist:
             banner_obj = None
 
@@ -31,7 +33,11 @@ class BannerNode(template.Node):
             context.update(local_context)
             return ''
         else:
-            pass
+            templates = [
+                #'banner_rotator/place_%s.html' % banner_obj.place.slug,
+                'banner_rotator/place.html'
+            ]
+            return render_to_string(templates, local_context)
 
 
 @register.tag
@@ -44,7 +50,7 @@ def banner(parser, token):
     if len(bits) not in [2, 4]:
         raise template.TemplateSyntaxError(_("banner tag takes three of four arguments"))
 
-    if 'as' == bits[2]:
+    if 4 == len(bits) and 'as' == bits[2]:
         place_slug = bits[1]
         varname = bits[3]
     else:
@@ -52,5 +58,3 @@ def banner(parser, token):
         varname = None
 
     return BannerNode(place_slug, varname)
-
-# todo
