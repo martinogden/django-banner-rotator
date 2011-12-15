@@ -38,6 +38,6 @@ class BannerManager(models.Manager):
 
         calculations = queryset.aggregate(weight_sum=models.Sum('weight'))
 
-        banners = queryset.extra(select={'bias': 'weight/%i' % calculations['weight_sum']})
+        banners = queryset.extra(select={'bias': 'weight/%f' % calculations['weight_sum']})
 
         return pick([(b, b.bias) for b in banners])
