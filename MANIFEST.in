@@ -1,2 +1,3 @@
 include README
 recursive-include banner_rotator/templates/banner_rotator *
+recursive-include banner_rotator/templatetags *
