@@ -4,6 +4,7 @@ import logging
 
 from django import forms
 from django.contrib import admin
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from banner_rotator.models import Campaign, Place, Banner
@@ -32,6 +33,10 @@ class BannerAdmin(admin.ModelAdmin):
             'fields': ('weight', 'max_views', 'max_clicks', 'start_at', 'finish_at', 'is_active'),
         })
     )
+
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
+    }
 
 admin.site.register(Banner, BannerAdmin)
 
