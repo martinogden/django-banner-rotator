@@ -57,6 +57,7 @@ class Banner(models.Model):
     url_target = models.CharField(_('Target'), max_length=10, choices=URL_TARGET_CHOICES, blank=True, default='')
 
     views = models.IntegerField(_('Views'), default=0)
+    clicks = models.IntegerField(_('Clicks'), default=0)
     max_views = models.IntegerField(_('Max views'), default=0)
     max_clicks = models.IntegerField(_('Max clicks'), default=0)
 
@@ -89,6 +90,9 @@ class Banner(models.Model):
         return ''
 
     def click(self, request):
+        self.clicks = models.F('clicks') + 1
+        self.save()
+
         click = {
             'banner': self,
             'ip': request.META.get('REMOTE_ADDR'),
@@ -107,7 +111,7 @@ class Banner(models.Model):
 
 
 class Click(models.Model):
-    banner = models.ForeignKey(Banner, related_name="clicks")
+    banner = models.ForeignKey(Banner, related_name="clicks_list")
     user = models.ForeignKey(User, null=True, blank=True, related_name="banner_clicks")
     datetime = models.DateTimeField("Clicked at", auto_now_add=True)
     ip = models.IPAddressField(null=True, blank=True)

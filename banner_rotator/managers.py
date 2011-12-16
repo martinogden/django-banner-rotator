@@ -1,7 +1,8 @@
 #-*- coding:utf-8 -*-
 
-from random import random
+from datetime import datetime
 from decimal import Decimal
+from random import random
 
 from django.db import models
 
@@ -31,7 +32,19 @@ def pick(bias_list):
 
 class BannerManager(models.Manager):
     def biased_choice(self, place):
-        queryset = self.filter(is_active=True, places=place)
+        now = datetime.now()
+
+        # проверка условий:
+        # - активен и находится привязан к нужному месту
+        # - если задано время начало показа баннера
+        # - если задано время окончания показа баннера
+        # - если задано ограничение на количество показов
+        # - если задано ограничение на количество кликов
+        queryset = self.filter(is_active=True, places=place).\
+                    filter(models.Q(start_at__isnull=True) | models.Q(start_at__lte=now)).\
+                    filter(models.Q(finish_at__isnull=True) | models.Q(finish_at__gte=now)).\
+                    filter(models.Q(max_views=0) | models.Q(max_views__gt=models.F('views'))).\
+                    filter(models.Q(max_clicks=0) | models.Q(max_clicks__gt=models.F('clicks')))
 
         if not queryset.count():
             raise self.model.DoesNotExist
