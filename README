@@ -1,5 +1,0 @@
-Banner Rotation App for Django
-
- * Tracks clicks and impressions
-
- * Biased manager to select Banner based upon weight: i.e. those with a higher weight get chosen more often
