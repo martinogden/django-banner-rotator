@@ -13,7 +13,10 @@
             {% if banner_place.height %}document.write(' height="{{ banner_place.height }}"');{% endif %}
             document.write('></object>');
         {% else %}
-            document.write('<a href="{% url banner_click banner.id %}"><img src="{{ banner.file.url }}?rnd='+rndnum+'" alt="{{ banner.alt }}"/></a>');
+            document.write('<a href="{% url banner_click banner.id %}"><img src="{{ banner.file.url }}?rnd='+rndnum+'" alt="{{ banner.alt }}"');
+            {% if banner_place.width %}document.write(' width="{{ banner_place.width }}"');{% endif %}
+            {% if banner_place.height %}document.write(' height="{{ banner_place.height }}"');{% endif %}
+            document.write('/></a>');
         {% endif %}
     </script>
 {% endif %}
