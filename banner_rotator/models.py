@@ -109,6 +109,16 @@ class Banner(models.Model):
     def get_absolute_url(self):
         return ('banner_click', (), {'banner_id': self.pk})
 
+    def admin_clicks_str(self):
+        if self.max_clicks:
+            return '%s / %s' % (self.clicks, self.max_clicks)
+        return '%s' % self.clicks
+
+    def admin_views_str(self):
+        if self.max_views:
+            return '%s / %s' % (self.views, self.max_views)
+        return '%s' % self.views
+
 
 class Click(models.Model):
     banner = models.ForeignKey(Banner, related_name="clicks_list")
