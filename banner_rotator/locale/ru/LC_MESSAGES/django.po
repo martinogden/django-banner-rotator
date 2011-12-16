@@ -51,6 +51,9 @@ msgstr ""
 msgid "Views"
 msgstr "Просмотры"
 
+msgid "Clicks"
+msgstr "Переходы"
+
 #: models.py:51
 msgid "Weight"
 msgstr "Вес"
@@ -66,3 +69,27 @@ msgstr "Файл"
 #: models.py:59
 msgid "Is active"
 msgstr "Активен"
+
+msgid "Current page"
+msgstr "Текущая страница"
+
+msgid "Blank page"
+msgstr "Новая страница"
+
+msgid "Start at"
+msgstr "Начать с"
+
+msgid "Finish at"
+msgstr "Прекратить с"
+
+msgid "Main"
+msgstr "Основные"
+
+msgid "Show"
+msgstr "Показ"
+
+msgid "Max views"
+msgstr "Максимальное число показов"
+
+msgid "Max clicks"
+msgstr "Максимальное число кликов"

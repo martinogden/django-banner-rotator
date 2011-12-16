@@ -54,7 +54,7 @@ class Banner(models.Model):
     alt = models.CharField(_('Image alt'), max_length=255, blank=True, default='')
 
     url = models.URLField(_('URL'))
-    url_target = models.CharField(_('Target'), max_length=10, choices=URL_TARGET_CHOICES, blank=True, default='')
+    url_target = models.CharField(_('Target'), max_length=10, choices=URL_TARGET_CHOICES, default='')
 
     views = models.IntegerField(_('Views'), default=0)
     clicks = models.IntegerField(_('Clicks'), default=0)
@@ -69,8 +69,8 @@ class Banner(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    start_at = models.DateTimeField(blank=True, null=True, default=None)
-    finish_at = models.DateTimeField(blank=True, null=True, default=None)
+    start_at = models.DateTimeField(_('Start at'), blank=True, null=True, default=None)
+    finish_at = models.DateTimeField(_('Finish at'), blank=True, null=True, default=None)
 
     is_active = models.BooleanField(_('Is active'), default=True)
 
@@ -113,11 +113,13 @@ class Banner(models.Model):
         if self.max_clicks:
             return '%s / %s' % (self.clicks, self.max_clicks)
         return '%s' % self.clicks
+    admin_clicks_str.short_description = _('Clicks')
 
     def admin_views_str(self):
         if self.max_views:
             return '%s / %s' % (self.views, self.max_views)
         return '%s' % self.views
+    admin_views_str.short_description = _('Views')
 
 
 class Click(models.Model):
