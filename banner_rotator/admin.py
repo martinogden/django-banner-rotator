@@ -12,14 +12,25 @@ from banner_rotator.models import Campaign, Place, Banner
 
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'size_str')
-admin.site.register(Place, PlaceAdmin)
+
+
+class CampaignBannerInline(admin.StackedInline):
+    model = Banner
+    extra = 0
+    readonly_fields = ['views', 'clicks']
+    fields = ['is_active', 'places', 'name', 'url', 'file', 'weight', 'views', 'clicks']
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
+    }
 
 
 class CampaignAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at', 'updated_at')
-    readonly_fields = ('created_at', 'updated_at')
-admin.site.register(Campaign, CampaignAdmin)
+    fields = ('name',)
+    inlines = [CampaignBannerInline]
 
+
+# todo добавить возможность просматривать список переходов по баннеру
 
 class BannerAdmin(admin.ModelAdmin):
     list_display = ('name', 'campaign', 'weight', 'url', 'admin_views_str', 'admin_clicks_str', 'is_active')
@@ -38,42 +49,7 @@ class BannerAdmin(admin.ModelAdmin):
         models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
     }
 
+
 admin.site.register(Banner, BannerAdmin)
-
-
-#class CampaignAdmin(admin.ModelAdmin):
-#    inlines = [BannerAdminInline]
-#
-#admin.site.register(Campaign, CampaignAdmin)
-#
-#
-#class BannerForm(forms.ModelForm):
-#    """
-#    We override the form to add the click count as a 'hidden' field,
-#        Field is a textinput, and looks invisible due to css styling.
-#
-#    This is a little hacky but it's an easy workaround, and isn't public facing
-#    """
-#    clicks = forms.CharField(required=False, widget=forms.TextInput(
-#        attrs={'readonly':'readonly', 'style':'border: none; padding: 0;'}))
-#
-#    class Meta:
-#        model = Banner
-#
-#    def __init__(self, *args, **kwargs):
-#        super(BannerForm, self).__init__(*args, **kwargs)
-#
-#        # Set the form fields based on the model object
-#        if kwargs.has_key('instance'):
-#            instance = kwargs['instance']
-#            self.initial['clicks'] = instance.clicks.count()
-#        else:
-#            self.initial['clicks'] = 0
-#
-#
-#class BannerAdminInline(admin.StackedInline):
-#    model = Banner
-#    form = BannerForm
-#    extra = 0
-#    readonly_fields = ['views',]
-#    fields = ['is_active', 'name', 'url', 'file', 'weight', 'clicks', 'views']
+admin.site.register(Campaign, CampaignAdmin)
+admin.site.register(Place, PlaceAdmin)

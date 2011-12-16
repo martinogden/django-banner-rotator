@@ -11,8 +11,12 @@ from banner_rotator.managers import BannerManager
 
 class Campaign(models.Model):
     name = models.CharField(_('Name'), max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(_('Create at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('Update at'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('campaign')
+        verbose_name_plural = _('campaigns')
 
     def __unicode__(self):
         return self.name
@@ -26,6 +30,8 @@ class Place(models.Model):
 
     class Meta:
         unique_together = ('slug',)
+        verbose_name = _('place')
+        verbose_name_plural = _('places')
 
     def __unicode__(self):
         return self.name
@@ -77,6 +83,10 @@ class Banner(models.Model):
     places = models.ManyToManyField(Place, verbose_name=_('Place'), related_name="banners", db_index=True)
 
     objects = BannerManager()
+
+    class Meta:
+        verbose_name = _('banner')
+        verbose_name_plural = _('banners')
 
     def __unicode__(self):
         return self.name

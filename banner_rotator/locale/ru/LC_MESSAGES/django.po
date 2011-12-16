@@ -93,3 +93,27 @@ msgstr "Максимальное число показов"
 
 msgid "Max clicks"
 msgstr "Максимальное число кликов"
+
+msgid "banner"
+msgstr "баннер"
+
+msgid "banners"
+msgstr "баннеры"
+
+msgid "place"
+msgstr "место"
+
+msgid "places"
+msgstr "места"
+
+msgid "campaign"
+msgstr "компания"
+
+msgid "campaigns"
+msgstr "компании"
+
+msgid "Create at"
+msgstr "Создана"
+
+msgid "Update at"
+msgstr "Обновлена"
