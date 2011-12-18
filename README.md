@@ -42,5 +42,5 @@ README
 
     {% load banners %}
     {% banner place-slug as banner %}
-    <a href="{% url banner_click banner.id %}"><img src="{{ banner.file.url }}" alt=""/></a>
+    <a href="{% url banner_click banner.id %}?place_slug=place-slug"><img src="{{ banner.file.url }}" alt=""/></a>
 

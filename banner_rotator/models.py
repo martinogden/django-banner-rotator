@@ -103,8 +103,24 @@ class Banner(models.Model):
         self.clicks = models.F('clicks') + 1
         self.save()
 
+        place = None
+        if 'place' in request.GET:
+            place = request.GET['place']
+        elif 'place_slug' in request.GET:
+            place = request.GET['place_slug']
+
+        try:
+            place_qs = Place.objects
+            if 'place' in request.GET:
+                place = place_qs.get(id=request.GET['place'])
+            elif 'place_slug' in request.GET:
+                place = place_qs.get(slug=request.GET['place_slug'])
+        except Place.DoesNotExist:
+            place = None
+
         click = {
             'banner': self,
+            'place': place,
             'ip': request.META.get('REMOTE_ADDR'),
             'user_agent': request.META.get('HTTP_USER_AGENT'),
             'referrer': request.META.get('HTTP_REFERER'),
@@ -134,6 +150,7 @@ class Banner(models.Model):
 
 class Click(models.Model):
     banner = models.ForeignKey(Banner, related_name="clicks_list")
+    place = models.ForeignKey(Place, related_name="clicks_list", null=True, default=None)
     user = models.ForeignKey(User, null=True, blank=True, related_name="banner_clicks")
     datetime = models.DateTimeField("Clicked at", auto_now_add=True)
     ip = models.IPAddressField(null=True, blank=True)
