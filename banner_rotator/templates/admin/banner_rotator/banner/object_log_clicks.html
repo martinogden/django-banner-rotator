@@ -1,0 +1,50 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="../../../../../">{% trans 'Home' %}</a> &rsaquo;
+        <a href="../../../../">{{ app_label|capfirst }}</a> &rsaquo;
+        <a href="../../../">{{ module_name }}</a> &rsaquo;
+        <a href="../../">{{ object|truncatewords:"18" }}</a> &rsaquo;
+        {% trans 'Log clicks' %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+        <div class="module">
+
+            {% if log_clicks %}
+                <table id="change-history">
+                    <thead>
+                    <tr>
+                        <th scope="col">{% trans 'Date/time' %}</th>
+                        <th scope="col">{% trans 'Place' %}</th>
+                        <th scope="col">{% trans 'User' %}</th>
+                        <th scope="col">{% trans 'IP' %}</th>
+                        <th scope="col">{% trans 'User Agent' %}</th>
+                        <th scope="col">{% trans 'Referrer' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for click in log_clicks %}
+                        <tr>
+                            <th scope="row">{{ click.datetime|date:"Y.m.d H:i" }}</th>
+                            <td>{{ click.place }}</td>
+                            <td>{{ click.user.username }}{% if click.user.get_full_name %} ({{ click.user.get_full_name }}){% endif %}</td>
+                            <td>{{ click.ip }}</td>
+                            <td>{{ click.user_agent }}</td>
+                            <td>{{ click.referrer }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>{% trans "This object doesn't have a clicks log. It probably wasn't added via this admin site." %}</p>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

@@ -2,12 +2,17 @@
 
 import logging
 
-from django import forms
+from django import forms, template
 from django.contrib import admin
+from django.contrib.admin.util import unquote
 from django.db import models
+from django.shortcuts import get_object_or_404, render_to_response
+from django.utils.encoding import force_unicode
+from django.utils.functional import update_wrapper
+from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
-from banner_rotator.models import Campaign, Place, Banner
+from banner_rotator.models import Campaign, Place, Banner, Click
 
 
 class PlaceAdmin(admin.ModelAdmin):
@@ -30,8 +35,6 @@ class CampaignAdmin(admin.ModelAdmin):
     inlines = [CampaignBannerInline]
 
 
-# todo добавить возможность просматривать список переходов по баннеру
-
 class BannerAdmin(admin.ModelAdmin):
     list_display = ('name', 'campaign', 'weight', 'url', 'admin_views_str', 'admin_clicks_str', 'is_active')
     list_filter = ('campaign', 'places', 'is_active')
@@ -48,6 +51,49 @@ class BannerAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
     }
+
+    object_log_clicks_template = None
+
+    def get_urls(self):
+        from django.conf.urls.defaults import patterns, url
+
+        def wrap(view):
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+
+        urlpatterns = patterns('',
+            url(r'^$', wrap(self.changelist_view), name='%s_%s_changelist' % info),
+            url(r'^add/$', wrap(self.add_view), name='%s_%s_add' % info),
+            url(r'^(.+)/history/$', wrap(self.history_view), name='%s_%s_history' % info),
+            url(r'^(.+)/delete/$', wrap(self.delete_view), name='%s_%s_delete' % info),
+            url(r'^(.+)/log/clicks/$', wrap(self.log_clicks_view), name='%s_%s_log_clicks' % info),
+            url(r'^(.+)/$', wrap(self.change_view), name='%s_%s_change' % info),
+        )
+        return urlpatterns
+
+    def log_clicks_view(self, request, object_id, extra_context=None):
+        model = self.model
+        opts = model._meta
+        app_label = opts.app_label
+
+        obj = get_object_or_404(model, pk=unquote(object_id))
+
+        context = {
+            'module_name': capfirst(force_unicode(opts.verbose_name_plural)),
+            'object': obj,
+            'root_path': self.admin_site.root_path,
+            'app_label': app_label,
+            'log_clicks': Click.objects.filter(banner=obj).order_by('-datetime')
+        }
+        context.update(extra_context or {})
+        context_instance = template.RequestContext(request, current_app=self.admin_site.name)
+        return render_to_response(self.object_log_clicks_template or [
+            "admin/%s/%s/object_log_clicks.html" % (app_label, opts.object_name.lower()),
+            "admin/%s/object_log_clicks.html" % app_label,
+        ], context, context_instance=context_instance)
 
 
 admin.site.register(Banner, BannerAdmin)
