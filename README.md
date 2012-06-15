@@ -1,23 +1,23 @@
 README
 ======
 
-Приложение для ротации баннеров.
+Banner Rotation App for Django.
 
-* Позволяет отслеживать количество кликов и просмотров.
-* Поддерживает вес баннера, баннеры с большим весом чаще показываются.
-* Есть возможность создавать рекламные компании.
+* Tracks clicks and views.
+* Supports the weight of the banner, banners with large weight are shown more often.
+* You can create ad campaigns.
 
 
-Установка
+Setup
 ======
 
-Загрузите код из git репозитория:
-    
-    git clone git://github.com/plazix/django-banner-rotator.git django-banner-rotator
-    
-И добавте папку django-banner-rotator/banner_rotator в ваш PYTHONPATH.
+Get the code via git:
 
-Отредактируйте settings.py:
+    git clone git://github.com/plazix/django-banner-rotator.git django-banner-rotator
+
+Add the django-banner-rotator/banner_rotator folder to your PYTHONPATH.
+
+Edit to settings.py:
 
     INSTALLED_APPS = (
 
@@ -25,7 +25,7 @@ README
 
     )
 
-Добавьте в urls.py:
+Edit to urls.py:
 
     urlpatterns = patterns('',
 
@@ -33,12 +33,12 @@ README
 
     )
 
-Добавьте в шаблон:
+Add the template:
 
     {% load banners %}
     {% banner place-slug %}
 
-или
+or
 
     {% load banners %}
     {% banner place-slug as banner %}
