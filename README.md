@@ -13,7 +13,7 @@ Setup
 
 Get the code via git:
 
-    git clone git://github.com/plazix/django-banner-rotator.git django-banner-rotator
+    git clone git://github.com/martinogden/django-banner-rotator.git django-banner-rotator
 
 Add the django-banner-rotator/banner_rotator folder to your PYTHONPATH.
 

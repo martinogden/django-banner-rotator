@@ -13,7 +13,7 @@ README
 
 Загрузите код из git репозитория:
     
-    git clone git://github.com/plazix/django-banner-rotator.git django-banner-rotator
+    git clone git://github.com/martinogden/django-banner-rotator.git django-banner-rotator
     
 И добавте папку django-banner-rotator/banner_rotator в ваш PYTHONPATH.
 
