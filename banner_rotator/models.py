@@ -32,7 +32,8 @@ class Place(models.Model):
         verbose_name_plural = _('places')
 
     def __unicode__(self):
-        return self.name
+        size_str = self.size_str()
+        return '%s (%s)' % (self.name, size_str) if size_str else self.name
 
     def size_str(self):
         if self.width and self.height:
@@ -43,11 +44,12 @@ class Place(models.Model):
             return 'Xx%s' % self.height
         else:
             return ''
+    size_str.short_description = _('Size')
 
 
 class Banner(models.Model):
     URL_TARGET_CHOICES = (
-        ('', _('Current page')),
+        ('_self', _('Current page')),
         ('_blank', _('Blank page')),
     )
 
@@ -131,7 +133,7 @@ class Banner(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('banner_click', (), {'banner_id': self.pk})
+        return 'banner_click', (), {'banner_id': self.pk}
 
     def admin_clicks_str(self):
         if self.max_clicks:
