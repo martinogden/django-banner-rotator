@@ -16,7 +16,7 @@ register = template.Library()
 
 class BannerNode(template.Node):
     def __init__(self, place_slug, varname=None):
-        self.varname, self.place_slug, = varname, place_slug
+        self.varname, self.place_slug = varname, place_slug
 
     def render(self, context):
         try:
@@ -24,25 +24,27 @@ class BannerNode(template.Node):
         except Place.DoesNotExist:
             return ''
 
-        local_context = {'banner_place': self.place}
-
         try:
             banner_obj = Banner.objects.biased_choice(self.place)
             banner_obj.view()
         except Banner.DoesNotExist:
             banner_obj = None
 
-        local_context['banner'] = banner_obj
-
         if self.varname:
-            context.update(local_context)
+            context.update({
+                self.varname: banner_obj,
+                '%s_place' % self.varname: self.place
+            })
             return ''
         else:
             templates = [
-                #'banner_rotator/place_%s.html' % banner_obj.place.slug,
+                #'banner_rotator/place_%s.html' % place.slug,
                 'banner_rotator/place.html'
             ]
-            return render_to_string(templates, local_context)
+            return render_to_string(templates, {
+                'banner': banner_obj,
+                'banner_place': self.place
+            })
 
 
 @register.tag
