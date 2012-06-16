@@ -2,6 +2,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.validators import MaxLengthValidator
 from django.utils.translation import ugettext_lazy as _
 
 from banner_rotator.managers import BannerManager
@@ -154,6 +155,6 @@ class Click(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, related_name="banner_clicks")
     datetime = models.DateTimeField("Clicked at", auto_now_add=True)
     ip = models.IPAddressField(null=True, blank=True)
-    user_agent = models.TextField(null=True, blank=True)
+    user_agent = models.TextField(validators=[MaxLengthValidator(1000)], null=True, blank=True)
     referrer = models.URLField(null=True, blank=True)
 
