@@ -44,13 +44,12 @@ class BannerAdmin(admin.ModelAdmin):
             'fields': ('campaign', 'places', 'name', 'url', 'url_target', 'file', 'alt'),
         }),
         (_('Show'), {
-            'fields': ('weight', 'max_views', 'max_clicks', 'start_at', 'finish_at', 'is_active'),
+            'fields': ('weight', 'views', 'max_views', 'clicks', 'max_clicks', 'start_at', 'finish_at', 'is_active'),
         })
     )
 
-    formfield_overrides = {
-        models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
-    }
+    filter_horizontal = ('places',)
+    readonly_fields = ('views', 'clicks',)
 
     object_log_clicks_template = None
 
