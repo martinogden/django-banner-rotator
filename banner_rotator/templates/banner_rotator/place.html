@@ -1,22 +1,37 @@
 {% if banner %}
-    <script type="text/javascript">
-        var rndnum = Math.round(Math.random()*65535);
+    {% if banner.is_swf %}
+        <object
+                classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0"
+                {% if banner_place.width %}width="{{ banner_place.width }}"{% endif %}
+                {% if banner_place.height %}height="{{ banner_place.height }}"{% endif %}>
+            <param name="allowScriptAccess" value="Always">
+            <param name="menu" value="false">
+            <param name="quality" value="high">
+            <param name="wmode" value="opaque">
+            <param name="movie" value="{{ banner.file.url }}">
+            <param name="flashvars" value="url={% url banner_click banner.id %}?place={{ banner_place.id }}">
 
-        {% if banner.is_swf %}
-            document.write('<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0"');
-            {% if banner_place.width %}document.write(' width="{{ banner_place.width }}"');{% endif %}
-            {% if banner_place.height %}document.write(' height="{{ banner_place.height }}"');{% endif %}
-            document.write('><param name="allowScriptAccess" value="Always"><param name="menu" value="false"><param name="quality" value="high"><param name="wmode" value="opaque">');
-            document.write('<param name="movie" value="{{ banner.file.url }}?rnd='+rndnum+'"><param name="flashvars" value="url={% url banner_click banner.id %}?place={{ banner_place.id }}">');
-            document.write('<embed src="{{ banner.file.url }}?rnd='+rndnum+'" flashvars="url={% url banner_click banner.id %}?place={{ banner_place.id }}" quality="high" allowscriptaccess="Always" wmode="opaque" menu="false" swliveconnect="FALSE" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"');
-            {% if banner_place.width %}document.write(' width="{{ banner_place.width }}"');{% endif %}
-            {% if banner_place.height %}document.write(' height="{{ banner_place.height }}"');{% endif %}
-            document.write('></object>');
-        {% else %}
-            document.write('<a href="{% url banner_click banner.id %}?place={{ banner_place.id }}" target="{{ banner.url_target }}"><img src="{{ banner.file.url }}?rnd='+rndnum+'" alt="{{ banner.alt }}"');
-            {% if banner_place.width %}document.write(' width="{{ banner_place.width }}"');{% endif %}
-            {% if banner_place.height %}document.write(' height="{{ banner_place.height }}"');{% endif %}
-            document.write('/></a>');
-        {% endif %}
-    </script>
+            <embed
+                    src="{{ banner.file.url }}"
+                    flashvars="url={% url banner_click banner.id %}?place={{ banner_place.id }}"
+                    quality="high"
+                    allowscriptaccess="Always"
+                    wmode="opaque"
+                    menu="false"
+                    swliveconnect="FALSE"
+                    type="application/x-shockwave-flash"
+                    pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"
+                    {% if banner_place.width %}width="{{ banner_place.width }}"{% endif %}
+                    {% if banner_place.height %}height="{{ banner_place.height }}"{% endif %}>
+        </object>
+    {% else %}
+        <a href="{% url banner_click banner.id %}?place={{ banner_place.id }}" target="{{ banner.url_target }}">
+            <img
+                    src="{{ banner.file.url }}"
+                    alt="{{ banner.alt }}"
+                    {% if banner_place.width %}width="{{ banner_place.width }}"{% endif %}
+                    {% if banner_place.height %}height="{{ banner_place.height }}"{% endif %} />
+        </a>
+    {% endif %}
 {% endif %}
