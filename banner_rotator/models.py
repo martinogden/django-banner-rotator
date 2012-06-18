@@ -1,11 +1,27 @@
 #-*- coding:utf-8 -*-
 
+try:
+    from hashlib import md5
+except ImportError:
+    from md5 import md5
+from time import time
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MaxLengthValidator
 from django.utils.translation import ugettext_lazy as _
 
 from banner_rotator.managers import BannerManager
+
+
+def get_banner_upload_to(instance, filename):
+    """
+    Формирует путь для загрузки файлов
+    """
+    filename_parts = filename.split('.')
+    ext = '.%s' % filename_parts[-1] if len(filename_parts) > 1 else ''
+    new_filename = md5(u'%s-%s' % (filename.encode('utf-8'), time())).hexdigest()
+    return 'banner/%s%s' % (new_filename, ext)
 
 
 class Campaign(models.Model):
@@ -71,7 +87,7 @@ class Banner(models.Model):
     weight = models.IntegerField(_('Weight'), help_text=_("A ten will display 10 times more often that a one."),
         choices=[[i, i] for i in range(1, 11)], default=5)
 
-    file = models.FileField(_('File'), upload_to='banners')
+    file = models.FileField(_('File'), upload_to=get_banner_upload_to)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
