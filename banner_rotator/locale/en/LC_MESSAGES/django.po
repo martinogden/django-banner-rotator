@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-24 16:46+0400\n"
+"POT-Creation-Date: 2012-06-16 15:17+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,174 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:13 models.py:22 models.py:46
+#: admin.py:43
+msgid "Main"
+msgstr ""
+
+#: admin.py:46
+msgid "Show"
+msgstr ""
+
+#: admin.py:88 templates/admin/banner_rotator/banner/change_form.html:7
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:11
+msgid "Log clicks"
+msgstr ""
+
+#: models.py:11 models.py:24 models.py:59
 msgid "Name"
 msgstr ""
 
-#: models.py:23
-msgid "Slug"
+#: models.py:12
+msgid "Create at"
 msgstr ""
 
-#: models.py:24
-msgid "Width"
+#: models.py:13
+msgid "Update at"
+msgstr ""
+
+#: models.py:16
+msgid "campaign"
+msgstr ""
+
+#: models.py:17
+msgid "campaigns"
 msgstr ""
 
 #: models.py:25
+msgid "Slug"
+msgstr ""
+
+#: models.py:26
+msgid "Width"
+msgstr ""
+
+#: models.py:27
 msgid "Height"
 msgstr ""
 
-#: models.py:42
-msgid "Campaign"
+#: models.py:31
+msgid "place"
 msgstr ""
 
-#: models.py:44
-msgid "Place"
+#: models.py:32
+msgid "places"
 msgstr ""
 
 #: models.py:47
+msgid "Size"
+msgstr ""
+
+#: models.py:52
+msgid "Current page"
+msgstr ""
+
+#: models.py:53
+msgid "Blank page"
+msgstr ""
+
+#: models.py:56
+msgid "Campaign"
+msgstr ""
+
+#: models.py:60
+msgid "Image alt"
+msgstr ""
+
+#: models.py:62
 msgid "URL"
 msgstr ""
 
-#: models.py:49
+#: models.py:63
+msgid "Target"
+msgstr ""
+
+#: models.py:65 models.py:148
 msgid "Views"
 msgstr ""
 
-#: models.py:51
+#: models.py:66 models.py:142
+msgid "Clicks"
+msgstr ""
+
+#: models.py:67
+msgid "Max views"
+msgstr ""
+
+#: models.py:68
+msgid "Max clicks"
+msgstr ""
+
+#: models.py:70
 msgid "Weight"
 msgstr ""
 
-#: models.py:51
+#: models.py:70
 msgid "A ten will display 10 times more often that a one."
 msgstr ""
 
-#: models.py:54
+#: models.py:73
 msgid "File"
 msgstr ""
 
-#: models.py:59
+#: models.py:78
+msgid "Start at"
+msgstr ""
+
+#: models.py:79
+msgid "Finish at"
+msgstr ""
+
+#: models.py:81
 msgid "Is active"
+msgstr ""
+
+#: models.py:83
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:24
+msgid "Place"
+msgstr ""
+
+#: models.py:88
+msgid "banner"
+msgstr ""
+
+#: models.py:89
+msgid "banners"
+msgstr ""
+
+#: templates/admin/banner_rotator/banner/change_form.html:6
+msgid "History"
+msgstr ""
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:7
+msgid "Home"
+msgstr ""
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:23
+msgid "Date/time"
+msgstr ""
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:25
+msgid "User"
+msgstr ""
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:26
+msgid "IP"
+msgstr ""
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:27
+msgid "User Agent"
+msgstr ""
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:28
+msgid "Referrer"
+msgstr ""
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:45
+msgid ""
+"This object doesn't have a clicks log. It probably wasn't added via this "
+"admin site."
+msgstr ""
+
+#: templatetags/banners.py:58
+msgid "banner tag takes three of four arguments"
 msgstr ""

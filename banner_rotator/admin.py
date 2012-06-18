@@ -44,18 +44,21 @@ class BannerAdmin(admin.ModelAdmin):
             'fields': ('campaign', 'places', 'name', 'url', 'url_target', 'file', 'alt'),
         }),
         (_('Show'), {
-            'fields': ('weight', 'max_views', 'max_clicks', 'start_at', 'finish_at', 'is_active'),
+            'fields': ('weight', 'views', 'max_views', 'clicks', 'max_clicks', 'start_at', 'finish_at', 'is_active'),
         })
     )
 
-    formfield_overrides = {
-        models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
-    }
+    filter_horizontal = ('places',)
+    readonly_fields = ('views', 'clicks',)
 
     object_log_clicks_template = None
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns, url
+        try:
+            # Django 1.4
+            from django.conf.urls import patterns, url
+        except ImportError:
+            from django.conf.urls.defaults import patterns, url
 
         def wrap(view):
             def wrapper(*args, **kwargs):
@@ -82,9 +85,9 @@ class BannerAdmin(admin.ModelAdmin):
         obj = get_object_or_404(model, pk=unquote(object_id))
 
         context = {
+            'title': _('Log clicks'),
             'module_name': capfirst(force_unicode(opts.verbose_name_plural)),
             'object': obj,
-            'root_path': self.admin_site.root_path,
             'app_label': app_label,
             'log_clicks': Click.objects.filter(banner=obj).order_by('-datetime')
         }

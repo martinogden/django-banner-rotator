@@ -2,6 +2,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.validators import MaxLengthValidator
 from django.utils.translation import ugettext_lazy as _
 
 from banner_rotator.managers import BannerManager
@@ -32,7 +33,8 @@ class Place(models.Model):
         verbose_name_plural = _('places')
 
     def __unicode__(self):
-        return self.name
+        size_str = self.size_str()
+        return '%s (%s)' % (self.name, size_str) if size_str else self.name
 
     def size_str(self):
         if self.width and self.height:
@@ -43,11 +45,12 @@ class Place(models.Model):
             return 'Xx%s' % self.height
         else:
             return ''
+    size_str.short_description = _('Size')
 
 
 class Banner(models.Model):
     URL_TARGET_CHOICES = (
-        ('', _('Current page')),
+        ('_self', _('Current page')),
         ('_blank', _('Blank page')),
     )
 
@@ -66,7 +69,7 @@ class Banner(models.Model):
     max_clicks = models.IntegerField(_('Max clicks'), default=0)
 
     weight = models.IntegerField(_('Weight'), help_text=_("A ten will display 10 times more often that a one."),
-        choices=[[i,i] for i in range(1, 11)])
+        choices=[[i, i] for i in range(1, 11)], default=5)
 
     file = models.FileField(_('File'), upload_to='banners')
 
@@ -131,7 +134,7 @@ class Banner(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('banner_click', (), {'banner_id': self.pk})
+        return 'banner_click', (), {'banner_id': self.pk}
 
     def admin_clicks_str(self):
         if self.max_clicks:
@@ -152,6 +155,6 @@ class Click(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, related_name="banner_clicks")
     datetime = models.DateTimeField("Clicked at", auto_now_add=True)
     ip = models.IPAddressField(null=True, blank=True)
-    user_agent = models.CharField(max_length=255, null=True, blank=True)
+    user_agent = models.TextField(validators=[MaxLengthValidator(1000)], null=True, blank=True)
     referrer = models.URLField(null=True, blank=True)
 
