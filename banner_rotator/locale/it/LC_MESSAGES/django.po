@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-16 15:17+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:43
+msgid "Main"
+msgstr "Principale"
+
+#: admin.py:46
+msgid "Show"
+msgstr "Mostra"
+
+#: admin.py:88 templates/admin/banner_rotator/banner/change_form.html:7
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:11
+msgid "Log clicks"
+msgstr "Storico click"
+
+#: models.py:11 models.py:24 models.py:59
+msgid "Name"
+msgstr "Nome"
+
+#: models.py:12
+msgid "Create at"
+msgstr "Creato il"
+
+#: models.py:13
+msgid "Update at"
+msgstr "Aggiornato il"
+
+#: models.py:16
+msgid "campaign"
+msgstr "campagna"
+
+#: models.py:17
+msgid "campaigns"
+msgstr "campagne"
+
+#: models.py:25
+msgid "Slug"
+msgstr "Slug"
+
+#: models.py:26
+msgid "Width"
+msgstr "Larghezza"
+
+#: models.py:27
+msgid "Height"
+msgstr "Altezza"
+
+#: models.py:31
+msgid "place"
+msgstr "posizione"
+
+#: models.py:32
+msgid "places"
+msgstr "posizioni"
+
+#: models.py:47
+msgid "Size"
+msgstr "Dimensione"
+
+#: models.py:52
+msgid "Current page"
+msgstr "Pagina corrente"
+
+#: models.py:53
+msgid "Blank page"
+msgstr "Pagina vuota"
+
+#: models.py:56
+msgid "Campaign"
+msgstr "Campagna"
+
+#: models.py:60
+msgid "Image alt"
+msgstr "Testo alt per immagine"
+
+#: models.py:62
+msgid "URL"
+msgstr "URL"
+
+#: models.py:63
+msgid "Target"
+msgstr "Obiettivo"
+
+#: models.py:65 models.py:148
+msgid "Views"
+msgstr "Visualizzazioni"
+
+#: models.py:66 models.py:142
+msgid "Clicks"
+msgstr "Click"
+
+#: models.py:67
+msgid "Max views"
+msgstr "Max visualizzazioni"
+
+#: models.py:68
+msgid "Max clicks"
+msgstr "Max click"
+
+#: models.py:70
+msgid "Weight"
+msgstr "Peso"
+
+#: models.py:70
+msgid "A ten will display 10 times more often that a one."
+msgstr "10 verrà visualizzato dieci volte più spesso di 1"
+
+#: models.py:73
+msgid "File"
+msgstr "File"
+
+#: models.py:78
+msgid "Start at"
+msgstr "Inizia il"
+
+#: models.py:79
+msgid "Finish at"
+msgstr "Termina il"
+
+#: models.py:81
+msgid "Is active"
+msgstr "Attivo"
+
+#: models.py:83
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:24
+msgid "Place"
+msgstr "Posizione"
+
+#: models.py:88
+msgid "banner"
+msgstr "banner"
+
+#: models.py:89
+msgid "banners"
+msgstr "banner"
+
+#: templates/admin/banner_rotator/banner/change_form.html:6
+msgid "History"
+msgstr "Storico"
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:7
+msgid "Home"
+msgstr "Home"
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:23
+msgid "Date/time"
+msgstr "Data"
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:25
+msgid "User"
+msgstr "Utente"
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:26
+msgid "IP"
+msgstr "IP"
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:27
+msgid "User Agent"
+msgstr "User Agent"
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:28
+msgid "Referrer"
+msgstr "Referrer"
+
+#: templates/admin/banner_rotator/banner/object_log_clicks.html:45
+msgid ""
+"This object doesn't have a clicks log. It probably wasn't added via this "
+"admin site."
+msgstr ""
+"Questo oggetto non ha uno storico dei click. Probabilmente non è stato "
+"aggiunto tramite questo pannello di amministrazione."
+
+#: templatetags/banners.py:58
+msgid "banner tag takes three of four arguments"
+msgstr "il tag banner prende te di quattro argomenti"
