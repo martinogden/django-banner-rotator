@@ -44,3 +44,8 @@ or
     {% banner place-slug as banner %}
     <a href="{% url banner_click banner.id %}?place_slug=place-slug"><img src="{{ banner.file.url }}" alt=""/></a>
 
+Licence
+======
+
+Licensed for use under [GNU GPL](http://www.gnu.org/licenses/gpl.html).
+
