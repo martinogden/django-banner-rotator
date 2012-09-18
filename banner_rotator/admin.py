@@ -17,6 +17,7 @@ from banner_rotator.models import Campaign, Place, Banner, Click
 
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'size_str')
+    prepopulated_fields = {'slug': ('name',)}
 
 
 class CampaignBannerInline(admin.StackedInline):
