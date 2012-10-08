@@ -42,5 +42,6 @@ or
 
     {% load banners %}
     {% banner place-slug as banner %}
-    <a href="{% url banner_click banner.id %}?place_slug=place-slug"><img src="{{ banner.file.url }}" alt=""/></a>
-
+    {% if banner %}
+        <a href="{% url banner_click banner.id %}?place_slug=place-slug"><img src="{{ banner.file.url }}" alt=""/></a>
+    {% endif %}
