@@ -80,7 +80,6 @@ class Banner(models.Model):
     url_target = models.CharField(_('Target'), max_length=10, choices=URL_TARGET_CHOICES, default='')
 
     views = models.IntegerField(_('Views'), default=0)
-    clicks = models.IntegerField(_('Clicks'), default=0)
     max_views = models.IntegerField(_('Max views'), default=0)
     max_clicks = models.IntegerField(_('Max clicks'), default=0)
 
@@ -117,24 +116,6 @@ class Banner(models.Model):
         return ''
 
     def click(self, request):
-        self.clicks = models.F('clicks') + 1
-        self.save()
-
-        place = None
-        if 'place' in request.GET:
-            place = request.GET['place']
-        elif 'place_slug' in request.GET:
-            place = request.GET['place_slug']
-
-        try:
-            place_qs = Place.objects
-            if 'place' in request.GET:
-                place = place_qs.get(id=request.GET['place'])
-            elif 'place_slug' in request.GET:
-                place = place_qs.get(slug=request.GET['place_slug'])
-        except Place.DoesNotExist:
-            place = None
-
         click = {
             'banner': self,
             'place': place,
@@ -166,8 +147,12 @@ class Banner(models.Model):
 
 
 class Click(models.Model):
+<<<<<<< HEAD
     banner = models.ForeignKey(Banner, related_name="clicks_list")
     place = models.ForeignKey(Place, related_name="clicks_list", null=True, default=None)
+=======
+    banner = models.ForeignKey(Banner, related_name="clicks")
+>>>>>>> parent of 18c1e55... добавлена возможность ограничение показов для баннера
     user = models.ForeignKey(User, null=True, blank=True, related_name="banner_clicks")
     datetime = models.DateTimeField("Clicked at", auto_now_add=True)
     ip = models.IPAddressField(null=True, blank=True)
