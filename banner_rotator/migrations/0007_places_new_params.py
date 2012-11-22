@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
         db.create_unique('banner_rotator_place', ['slug'])
 
         # Adding field 'Banner.place'
-        db.add_column('banner_rotator_banner', 'place', self.gf('django.db.models.fields.related.ForeignKey')(default=None, related_name='banners', to=orm['banner_rotator.Place']), keep_default=False)
+        db.add_column('banner_rotator_banner', 'place', self.gf('django.db.models.fields.related.ForeignKey')(default=1, related_name='banners', to=orm['banner_rotator.Place']), keep_default=False)
 
         # Adding field 'Banner.alt'
         db.add_column('banner_rotator_banner', 'alt', self.gf('django.db.models.fields.CharField')(default='', max_length=255, blank=True), keep_default=False)
