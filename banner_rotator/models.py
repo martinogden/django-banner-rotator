@@ -147,15 +147,9 @@ class Banner(models.Model):
 
 
 class Click(models.Model):
-<<<<<<< HEAD
-    banner = models.ForeignKey(Banner, related_name="clicks_list")
-    place = models.ForeignKey(Place, related_name="clicks_list", null=True, default=None)
-=======
     banner = models.ForeignKey(Banner, related_name="clicks")
->>>>>>> parent of 18c1e55... добавлена возможность ограничение показов для баннера
     user = models.ForeignKey(User, null=True, blank=True, related_name="banner_clicks")
     datetime = models.DateTimeField("Clicked at", auto_now_add=True)
     ip = models.IPAddressField(null=True, blank=True)
     user_agent = models.TextField(validators=[MaxLengthValidator(1000)], null=True, blank=True)
     referrer = models.URLField(null=True, blank=True)
-
