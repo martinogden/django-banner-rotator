@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 
 import logging
+from functools import update_wrapper
 
 from django import forms, template
 from django.contrib import admin
@@ -8,7 +9,6 @@ from django.contrib.admin.util import unquote
 from django.db import models
 from django.shortcuts import get_object_or_404, render_to_response
 from django.utils.encoding import force_unicode
-from django.utils.functional import update_wrapper
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
