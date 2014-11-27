@@ -5,6 +5,7 @@ try:
 except ImportError:
     from md5 import md5
 from time import time
+import six
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -20,7 +21,11 @@ def get_banner_upload_to(instance, filename):
     """
     filename_parts = filename.split('.')
     ext = '.%s' % filename_parts[-1] if len(filename_parts) > 1 else ''
-    new_filename = md5(u'%s-%s' % (filename.encode('utf-8'), time())).hexdigest()
+    if six.PY3:
+        filename_str = ('%s-%s' % (filename, time())).encode('utf-8')
+    else:
+        filename_str = u'%s-%s' % (filename.encode('utf-8'), time())
+    new_filename = md5(filename_str).hexdigest()
     return 'banner/%s%s' % (new_filename, ext)
 
 
