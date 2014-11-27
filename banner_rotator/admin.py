@@ -1,5 +1,5 @@
 #-*- coding:utf-8 -*-
-
+import six
 import logging
 from functools import update_wrapper
 
@@ -8,7 +8,8 @@ from django.contrib import admin
 from django.contrib.admin.util import unquote
 from django.db import models
 from django.shortcuts import get_object_or_404, render_to_response
-from django.utils.encoding import force_unicode
+if six.PY2:
+    from django.utils.encoding import force_unicode
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
@@ -85,9 +86,14 @@ class BannerAdmin(admin.ModelAdmin):
 
         obj = get_object_or_404(model, pk=unquote(object_id))
 
+        if six.PY3:
+            module_name = capfirst(opts.verbose_name_plural)
+        else:
+            module_name = capfirst(force_unicode(opts.verbose_name_plural))
+            
         context = {
             'title': _('Log clicks'),
-            'module_name': capfirst(force_unicode(opts.verbose_name_plural)),
+            'module_name': module_name,
             'object': obj,
             'app_label': app_label,
             'log_clicks': Click.objects.filter(banner=obj).order_by('-datetime')
