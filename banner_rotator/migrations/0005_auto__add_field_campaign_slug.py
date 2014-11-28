@@ -1,4 +1,5 @@
 # encoding: utf-8
+from __future__ import unicode_literals
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -9,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'Campaign.slug'
-        db.add_column('banner_rotator_campaign', 'slug', self.gf('django_extensions.db.fields.AutoSlugField')(allow_duplicates=False, max_length=50, separator=u'-', blank=True, default='', populate_from='name', overwrite=False, db_index=True), keep_default=False)
+        db.add_column('banner_rotator_campaign', 'slug', self.gf('django_extensions.db.fields.AutoSlugField')(allow_duplicates=False, max_length=50, separator='-', blank=True, default='', populate_from='name', overwrite=False, db_index=True), keep_default=False)
 
 
     def backwards(self, orm):

@@ -1,4 +1,5 @@
 # encoding: utf-8
+from __future__ import unicode_literals
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -82,7 +83,7 @@ class Migration(SchemaMigration):
         db.alter_column('banner_rotator_banner', 'campaign_id', self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['banner_rotator.Campaign']))
 
         # Adding field 'Campaign.slug'
-        db.add_column('banner_rotator_campaign', 'slug', self.gf('django_extensions.db.fields.AutoSlugField')(default='', populate_from='name', allow_duplicates=False, max_length=50, separator=u'-', blank=True, overwrite=False, db_index=True), keep_default=False)
+        db.add_column('banner_rotator_campaign', 'slug', self.gf('django_extensions.db.fields.AutoSlugField')(default='', populate_from='name', allow_duplicates=False, max_length=50, separator='-', blank=True, overwrite=False, db_index=True), keep_default=False)
 
 
     models = {

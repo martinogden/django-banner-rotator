@@ -1,5 +1,6 @@
 #-*- coding:utf-8 -*-
 
+from __future__ import unicode_literals
 try:
     from hashlib import md5
 except ImportError:
@@ -20,7 +21,7 @@ def get_banner_upload_to(instance, filename):
     """
     filename_parts = filename.split('.')
     ext = '.%s' % filename_parts[-1] if len(filename_parts) > 1 else ''
-    new_filename = md5(u'%s-%s' % (filename.encode('utf-8'), time())).hexdigest()
+    new_filename = md5(('%s-%s' % (filename, time())).encode('utf-8')).hexdigest()
     return 'banner/%s%s' % (new_filename, ext)
 
 
@@ -118,7 +119,7 @@ class Banner(models.Model):
     def click(self, request):
         click = {
             'banner': self,
-            'place': place,
+            'place': request.GET['place_slug'],
             'ip': request.META.get('REMOTE_ADDR'),
             'user_agent': request.META.get('HTTP_USER_AGENT'),
             'referrer': request.META.get('HTTP_REFERER'),
